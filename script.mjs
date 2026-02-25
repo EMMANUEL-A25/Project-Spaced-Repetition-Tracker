@@ -7,6 +7,14 @@
 import { getUserIds } from "./common.mjs";
 
 //window.onload = function () {
- // const users = getUserIds();
- // document.querySelector("body").innerText = `There are ${users.length} users`;
-//};
+ const selection = document.getElementById("user-selection");
+ const dropdown = document.getElementById("userDropdown");
+ const agenda = document.getElementById("add-agenda");
+ const form = document.getElementById("agendaForm");
+
+ const topic = document.getElementById("topicInput");
+ const date = document.getElementById("dateInput");
+
+ const message = document.getElementById("formErrorMsg");
+
+};
