@@ -1,8 +1,69 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script type="module" src="script.mjs"></script>
+<html lang="en">
+
+  <head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title> Spaced Repetition Tracker</title> 
+    <script type="module" src="script.mjs"></script> 
   </head>
+
   <body>
+    
+    <!-- Page Header --> 
+    <header>
+      <h1>Space Repetition Tracker</h1>
+    </header>
+
+    <!-- Main content --> 
+    <main role="main">
+
+      <!-- user Selection --> 
+      <section aria-labelledby="user-selection">
+        <h2 id="user-selection">Select user</h2>
+        <label for="userDropdown">User:</label>
+        <select id="userDropdown"> 
+          <option value="">--Choose a user--</option> 
+        </select>
+      </section>
+
+      <!-- Add Agenda Form --> 
+      <section aria-labelledby="add-agenda">
+        <h2 id="add-agenda">Add New Agenda</h2>
+        <form id="agendaForm"> 
+          <label for="topicInput">Topic:</label> 
+          <input type="text" id="topicInput" required> 
+          <label for="dateInput">Date:</label> 
+          <input type="date" id="dateInput" required> 
+          <button type="submit">Add Agenda</button> 
+        </form>
+      </section>
+
+      <p id="formErrorMsg" hidden></p> 
+
+      <!-- No Agenda Message --> 
+      <p id="noAgendaMsg" hidden>No agenda</p>
+
+      <!-- Table --> 
+      <section>
+        <table border="1" cellpadding="8" cellspacing="0"> 
+          <caption>User Agenda List</caption>
+          <thead>
+            <tr>
+              <th scope="col">Agenda</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody id="agendaTableBody"></tbody> 
+        </table>       
+      </section>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Piscine Project</p>
+    </footer>
+
   </body>
+
 </html>
