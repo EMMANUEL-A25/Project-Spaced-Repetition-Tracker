@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title> Spaced Repetition Tracker</title> 
     <script type="module" src="script.mjs"></script> 
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
@@ -32,10 +33,11 @@
         <h2 id="add-agenda">Add New Agenda</h2>
         <form id="agendaForm"> 
           <label for="topicInput">Topic:</label> 
-          <input type="text" id="topicInput" required> 
+          <input type="text" id="topicInput" name="topic" required> 
           <label for="dateInput">Date:</label> 
-          <input type="date" id="dateInput" required> 
+          <input type="date" id="dateInput" name="date" required> 
           <button type="submit">Add Agenda</button> 
+          <button type="button" id="clearBtn">Clear Agenda</button>
         </form>
       </section>
 
@@ -60,9 +62,6 @@
 
     </main>
 
-    <footer>
-      <p>&copy; 2025 Piscine Project</p>
-    </footer>
 
   </body>
 
