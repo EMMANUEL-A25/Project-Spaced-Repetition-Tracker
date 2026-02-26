@@ -1,0 +1,29 @@
+/* target the inputs and buttons mentioned in the accessibility report */
+#topicInput, 
+#dateInput, 
+#userDropdown,
+button, 
+#clearBtn {
+
+  min-height: 48px;
+  min-width: 48px;
+
+  padding: 12px;
+
+  margin: 8px 0;
+
+  font-size: 16px;
+  
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+#agendaForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+th, td {
+  padding: 12px;  
+}

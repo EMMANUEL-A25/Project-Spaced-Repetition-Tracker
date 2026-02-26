@@ -1,4 +1,5 @@
-import { getData, addData, clearData } from "./storage.mjs";
+
+import { getData } from "./storage.mjs";
 
 export function getUserIds() {
   return ["1", "2", "3", "4", "5"];
@@ -15,63 +16,54 @@ export async function fetchValidUserAgenda(userId, availableIds){
  return data || [];
 } 
 
-//organising the topic in to individual events
-export function flattenTopicsToEvents(topics){
-  const flatList = [];
-
-  if(!Array.isArray(topics)) return flatList;//returns an empty list if the topic is not an array
-
-  topics.forEach(topic => {
-    topic.revisionDates.forEach(dateStr => {
-       flatList.push({
-        topicName: topic.topicName,
-        date: dateStr
-       }) ;
-    });
-  });
-  return flatList;
-}
-
-//calculating our revision dates using UTC
-export function calculateRevisionDatesUTC(startDateString){
-
-  const date = new Date(startDateString);
-
-  const intervals = [
-    { unit: 'days', value: 7},
-    { unit: 'months', value: 1},
-    { unit: 'months', value: 3},
-    { unit: 'months', value: 6},
-    { unit: 'months', value: 12},
-  ];
-
-  return intervals.map(interval => {
-    const result = new Date(date); //local date/javascript date cloned.
-    if (interval.unit === 'days') {
-      result.setUTCDate(result.getUTCDate() + interval.value);
-
-    } else{
-      result.setUTCMonth(result.getUTCMonth() + interval.value);
-    }
-    return result.toISOString().split('T')[0];
-  });
-}
-
-
 export function prepareFinalAgenda(eventList) {
-  const now = new Date();//javascript date
-  const todayUTC = now.toISOString().split('T')[0];
+ if (!Array.isArray(eventList)) return [];
 
-  //sorting event list.
-  return eventList
-       .filter(event => event.date >= todayUTC)
-       .sort((a, b) => {
+ //1. filtering the list
+ const cleanList = eventList.filter(item => item && item.date && item.topicName);
 
-         const dateCompare = a.date.localeCompare(b.date);
-         if(dateCompare !== 0) return dateCompare;
+ return cleanList.sort((a, b) =>  {
+  const dateCompare = (a.date || "").localeCompare(b.date || "");
+  if(dateCompare !== 0) return dateCompare;
+  return (a.topicName || "").localeCompare(b.topicName || "");
+ });
 
-        return a.topicName.localeCompare(b.topicName);//this is a tie breaker keeps the code clean and not ever chaging
-       });
+}
 
+export function formatUserDate(dateString){
+  const dateObj = new Date(dateString);
 
+  //target the day and determine the ordinal
+  const day = dateObj.getUTCDate();
+  let ordinal = "th";
+
+  if(day< 11 || day > 13) {
+    switch(day % 10){
+      case 1: ordinal = "st"; break;
+      case 2: ordinal = "nd"; break;
+      case 3: ordinal = "rd"; break;
+    }
+
+  }
+
+  //get the full month name
+  const month = dateObj.toLocaleDateString('en-GB',
+     { month: 'long', 
+      timezone: 'UTC'
+    });
+  
+  //getting the year
+  const year = dateObj.getUTCFullYear();
+
+  return `${day}${ordinal}, ${month} ${year}`;
+}
+
+export function calculateReviewDate(startDate, monthsToAdd, daysToAdd = 0){
+  const d = new Date(startDate);
+
+  d.setUTCMonth(d.getUTCMonth() + monthsToAdd);
+
+  d.setUTCDate(d.getUTCDate() + daysToAdd);
+
+  return d.toISOString().split('T')[0];
 }
