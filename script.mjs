@@ -38,12 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortedData = common.prepareFinalAgenda(rawData) || [];
 
     // Filter: Only show items newer than 1 week ago 
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(now.getDate() - 7);
+    const startOfToday = new Date();
+
+    startOfToday.setHours(0, 0, 0, 0);
 
     const filteredData = sortedData.filter(item => {
       const itemDate = new Date(item.date);
-      return itemDate >= oneWeekAgo;
+      return itemDate >= startOfToday;
     });
 
     noAgendaMsg.hidden = filteredData.length > 0;

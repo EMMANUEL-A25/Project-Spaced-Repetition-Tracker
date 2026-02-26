@@ -49,7 +49,7 @@ export function formatUserDate(dateString){
   //get the full month name
   const month = dateObj.toLocaleDateString('en-GB',
      { month: 'long', 
-      timezone: 'UTC'
+      timeZone: 'UTC'
     });
   
   //getting the year
@@ -61,7 +61,13 @@ export function formatUserDate(dateString){
 export function calculateReviewDate(startDate, monthsToAdd, daysToAdd = 0){
   const d = new Date(startDate);
 
+  const originalDay = d.getUTCDate();
+
   d.setUTCMonth(d.getUTCMonth() + monthsToAdd);
+
+  if(d.getUTCDate() !== originalDay){
+    d.setUTCDate(0);
+  }
 
   d.setUTCDate(d.getUTCDate() + daysToAdd);
 
